@@ -1,0 +1,15 @@
+USER COMMAND: Đưa khối màu đỏ vào vùng B.
+LLM PLAN: {"plan": [{"skill": "pick", "object": "red_cube"}, {"skill": "place", "object": "red_cube", "zone": "zone_b"}, {"skill": "home"}]}
+IK red_cube:approach: [-1.0667, -1.5569, 1.4502, -1.464, -1.5708, -2.6375]
+MOVEIT {'motion': 'red_cube:approach', 'moveit_error_code': 1, 'seconds': 4.692, 'trajectory_points': 198}
+MOVEIT {'motion': 'red_cube:descend', 'planner': 'MoveIt Cartesian', 'fraction': 1.0, 'trajectory_points': 21, 'moveit_error_code': 1, 'seconds': 3.494, 'state_valid_after': True}
+MOVEIT {'motion': 'red_cube:lift', 'planner': 'MoveIt Cartesian', 'fraction': 1.0, 'trajectory_points': 21, 'moveit_error_code': 1, 'seconds': 3.605, 'state_valid_after': True}
+EXECUTION: {"skill": "pick", "object": "red_cube", "status": "SUCCESS", "positions_after": {"red_cube": [0.26000474698385434, -0.19999742479975405, 0.2199984893098168], "yellow_cube": [0.25999999999998075, -1.8454090720103865e-13, 0.1199999999997791], "blue_cube": [0.25999999999998075, 0.19999999999982077, 0.1199999999997791]}, "seconds": 13.027}
+IK zone_b:approach: [-0.3338, -1.2246, 1.0495, -1.3957, -1.5708, -1.9046]
+MOVEIT {'motion': 'zone_b:approach', 'moveit_error_code': 1, 'seconds': 2.715, 'trajectory_points': 104}
+MOVEIT {'motion': 'zone_b:descend', 'planner': 'MoveIt Cartesian', 'fraction': 1.0, 'trajectory_points': 21, 'moveit_error_code': 1, 'seconds': 2.944, 'state_valid_after': True}
+MOVEIT {'motion': 'zone_b:retreat', 'planner': 'MoveIt Cartesian', 'fraction': 1.0, 'trajectory_points': 21, 'moveit_error_code': 1, 'seconds': 2.603, 'state_valid_after': True}
+EXECUTION: {"skill": "place", "object": "red_cube", "zone": "zone_b", "status": "SUCCESS", "positions_after": {"red_cube": [0.39998169663008737, -2.5331765822804764e-05, 0.1199999999997791], "yellow_cube": [0.25999999999998075, -1.8454090720103865e-13, 0.1199999999997791], "blue_cube": [0.25999999999998075, 0.19999999999982077, 0.1199999999997791]}, "seconds": 10.093}
+MOVEIT {'motion': 'home', 'moveit_error_code': 1, 'seconds': 3.982, 'trajectory_points': 163}
+EXECUTION: {"skill": "home", "status": "SUCCESS", "positions_after": {"red_cube": [0.39998169663008737, -2.5331765822804764e-05, 0.1199999999997791], "yellow_cube": [0.25999999999998075, -1.8454090720103865e-13, 0.1199999999997791], "blue_cube": [0.25999999999998075, 0.19999999999982077, 0.1199999999997791]}, "seconds": 4.843}
+TASK SUCCESS

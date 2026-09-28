@@ -1,0 +1,440 @@
+% Báo cáo thực nghiệm; số liệu lấy từ results/validation_*.json.
+\documentclass[11pt,a4paper]{article}
+\usepackage[left=2cm,right=2cm,top=2.1cm,bottom=2cm,headheight=15pt]{geometry}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T5]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage[vietnamese]{babel}
+\else
+  \usepackage{fontspec}
+  \setmainfont{TeX Gyre Termes}
+  \setsansfont{TeX Gyre Heros}
+  \setmonofont{Latin Modern Mono}
+\fi
+\usepackage{amsmath,array,tabularx,booktabs}
+\usepackage[table]{xcolor}
+\usepackage{graphicx,enumitem,fancyhdr,listings,tikz,titlesec,caption,microtype}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage[unicode,hidelinks]{hyperref}
+\definecolor{accent}{HTML}{13558C}
+\definecolor{muted}{HTML}{51606C}
+\definecolor{light}{HTML}{F2F6FA}
+\definecolor{line}{HTML}{CCD9E4}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5.5pt}
+\linespread{1.05}
+\renewcommand{\arraystretch}{1.18}
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=3pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\titleformat{\section}{\Large\sffamily\bfseries\color{accent}}{\thesection}{0.7em}{}[\vspace{-2mm}\color{line}\titlerule]
+\titlespacing*{\section}{0pt}{13pt}{8pt}
+\captionsetup{font=small,labelfont={bf,color=accent},skip=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{muted}Tương tác người -- robot\quad/\quad Bài thực hành 02}
+\fancyhead[R]{\small\sffamily\color{muted}\MSSV}
+\fancyfoot[L]{\small\sffamily\color{muted}Nguyễn Hoàng Thiện}
+\fancyfoot[R]{\small\sffamily\color{muted}Trang \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
+\lstset{basicstyle=\ttfamily\small,backgroundcolor=\color{light},frame=single,
+rulecolor=\color{line},breaklines=true,columns=fullflexible,keepspaces=true,
+showstringspaces=false,aboveskip=7pt,belowskip=7pt,framesep=6pt}
+\newcommand{\HoTen}{Nguyễn Hoàng Thiện}
+\newcommand{\MSSV}{23020774}
+\newcommand{\Anh}[1]{\IfFileExists{#1}{\includegraphics[width=\linewidth]{#1}}{\fbox{\parbox[c][3cm][c]{0.92\linewidth}{\centering Ảnh thực nghiệm đi kèm trong thư mục \texttt{results}.\\Trình biên dịch cần truy cập tệp ảnh.}}}}
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{5mm}
+{\large\sffamily\bfseries ĐẠI HỌC QUỐC GIA HÀ NỘI\par}
+\vspace{2mm}
+{\large\sffamily\bfseries TRƯỜNG ĐẠI HỌC CÔNG NGHỆ\par}
+\vspace{5mm}{\color{accent}\rule{0.62\linewidth}{0.8pt}}\par
+\vspace{12mm}
+\IfFileExists{results/cover_logo_original.png}{\includegraphics[width=3.4cm]{results/cover_logo_original.png}}{\rule{3.4cm}{0pt}}\par
+\vspace{16mm}
+{\Large\sffamily\bfseries\color{accent} BÁO CÁO THỰC HÀNH 02\par}
+\vspace{4mm}
+{\large\sffamily Môn học: Tương tác người -- robot\par}
+\vspace{13mm}
+{\LARGE\sffamily\bfseries Điều khiển UR3e bằng LLM\par}
+\vspace{3mm}
+{\Large\sffamily\bfseries và Skill-based Planning\par}
+\vspace{6mm}{\color{accent}\rule{0.18\linewidth}{1pt}}\par
+\vfill
+\begin{tabular}{@{}ll@{}}
+\textcolor{accent}{\textbf{Sinh viên thực hiện:}} & \HoTen\\[3mm]
+\textcolor{accent}{\textbf{Mã số sinh viên:}} & \MSSV\\[3mm]
+\textcolor{accent}{\textbf{Giảng viên hướng dẫn:}} & Nguyễn Quốc Bảo
+\end{tabular}
+\vfill
+{\color{muted}Hà Nội, tháng 9 năm 2026\par}
+\end{titlepage}
+\setcounter{page}{1}
+
+\noindent\colorbox{light}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\small
+\textbf{\textcolor{accent}{Tóm tắt.}} Trong bài thực hành này, em xây dựng
+hệ thống điều khiển UR3e mô phỏng bằng câu lệnh tiếng Việt và tiếng Anh.
+LLM đề xuất thứ tự các skill, còn chương trình kiểm tra kế hoạch và dùng
+MoveIt~2 để lập quỹ đạo. Với MSSV \MSSV, nhiệm vụ cá nhân là đưa khối vàng
+vào A, khối đỏ vào B và khối xanh dương vào C. Lần chạy theo MSSV hoàn thành
+7/7 skill; video và log được lưu cùng mã nguồn.}}
+\vspace{4mm}
+
+\section{Mục tiêu và môi trường triển khai}
+Mục tiêu của bài là để robot hiểu một yêu cầu như ``đưa khối đỏ vào vùng B''
+và tự thực hiện đúng chuỗi gắp, đặt, về vị trí chờ. Em triển khai chương trình
+trên Ubuntu 22.04.5 trong WSL2, với ROS~2 Humble, Gazebo Classic 11.10.2,
+MoveIt~2 phiên bản 2.5.10 và mô hình UR3e từ \texttt{ur\_description} 2.13.0.
+Phần LLM được kết nối qua 9Router 0.5.91; các lần kiểm thử dùng model
+\texttt{oc/mimo-v2.5-free}.
+
+Em giới hạn đầu ra của LLM ở mức kế hoạch tác vụ: chọn \texttt{pick},
+\texttt{place} hoặc \texttt{home} cùng tên vật và vùng đích. Chương trình mới
+là nơi kiểm tra kế hoạch và yêu cầu MoveIt~2 tính đường đi. Cách chia này giúp
+robot xử lý nhiều cách diễn đạt tiếng Việt, tiếng Anh mà không cho LLM gửi
+lệnh khớp trực tiếp.
+
+Trong Gazebo, em bố trí một bàn thao tác, ba khối cạnh 40~mm và ba vùng đặt
+vuông cạnh 80~mm quanh UR3e. Tọa độ ban đầu và tâm vùng được khai báo trong
+\texttt{scene.yaml}; khi chạy, chương trình đọc lại vị trí vật từ simulator.
+Camera toàn cảnh chỉ ghi ảnh và video làm bằng chứng, không tham gia nhận dạng
+hay xác định vị trí vật.
+
+\section{Cấu trúc chương trình, node và package chính}
+Em đặt mã nguồn trong package \texttt{ur3\_llm\_control}. Điểm vào là node
+\texttt{skill\_executor}: node nhận câu lệnh ở CLI, gọi planner, kiểm tra kế
+hoạch rồi chạy các skill theo thứ tự. Planner và validator là hai mô-đun Python
+được node này sử dụng, không phải hai node ROS chạy độc lập. Những thành phần
+chính và vai trò của chúng được tóm tắt ở bảng dưới.
+
+\begin{tabularx}{\linewidth}{@{}p{4.25cm}Y@{}}
+\toprule\textbf{Thành phần} & \textbf{Vai trò trong chương trình}\\\midrule
+\texttt{llm\_planner.py} & Gửi prompt, trạng thái vùng đặt và ánh xạ MSSV tới 9Router; nhận JSON và lưu thông tin model/token.\\
+\texttt{task\_validator.py} & Kiểm tra schema, allowlist, tham số và thứ tự gắp--thả; phát hiện vùng bị chiếm.\\
+\texttt{skill\_executor.py} & Điều phối tuần tự, dừng khi lỗi; ghi log, tọa độ và ảnh sau từng skill.\\
+\texttt{robot\_skills.py} & Gọi dịch vụ/action MoveIt, cập nhật planning scene và xác nhận kết quả từ Gazebo.\\
+\texttt{skill\_grasp.cpp} & Plugin Gazebo tạo/tháo khớp cố định giữa đầu hút và vật ở gần.\\
+\texttt{move\_group} & Bộ giải KDL, lập kế hoạch OMPL/RRTConnect và đường đi Cartesian.\\
+\texttt{gazebo\_ros2\_control} & Kết nối robot mô phỏng với \texttt{joint\_trajectory\_controller}; phát trạng thái khớp.\\
+\texttt{robot\_state\_publisher} & Phát cây TF từ mô hình robot và trạng thái khớp.\\
+\bottomrule
+\end{tabularx}
+
+File \texttt{llm\_robot.launch.py} khởi động Gazebo, robot, controller và
+MoveIt. Em đặt cấu hình trong \texttt{config}, prompt trong \texttt{prompts},
+mô hình đầu hút trong \texttt{urdf} và cảnh trong \texttt{worlds}. Các phiên
+chạy dùng \texttt{ROS\_DOMAIN\_ID=42} để tách khỏi những ROS graph khác trên máy.
+
+\newpage
+\section{Các robot skill đã xây dựng}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}Y@{}}
+\toprule\textbf{Skill} & \textbf{Các bước và điều kiện thực thi}\\\midrule
+\texttt{home()} & Kiểm tra tay gắp rỗng; dùng MoveIt đưa sáu khớp về tư thế chờ trong cấu hình.\\
+\texttt{pick(object)} & Kiểm tra vật hợp lệ và tay gắp rỗng; đọc vị trí thực, tiếp cận từ trên cao, hạ đầu hút, gắn vật rồi nâng 100~mm. Xác nhận độ cao vật tăng ít nhất 60~mm.\\
+\texttt{place(object, zone)} & Kiểm tra đang giữ đúng vật và vùng đích trống; di chuyển đến trên vùng, hạ xuống, tháo khớp gắp và rút đầu hút. Kiểm tra sai số vị trí bằng trạng thái Gazebo.\\
+\bottomrule
+\end{tabularx}
+
+Em tách mỗi thao tác gắp--đặt thành hai kiểu chuyển động. Đoạn đi tới vị trí
+tiếp cận được MoveIt lập kế hoạch bằng KDL và OMPL/RRTConnect qua
+\texttt{/move\_action}. Khi đầu hút ở gần vật hoặc vùng đặt, em dùng đường
+Cartesian để hạ, nâng và rút theo từng bước 5~mm. Chương trình chỉ gửi quỹ
+đạo này đi khi MoveIt tính được đủ 100\% đường đi, đã tham số hóa thời gian và
+kiểm tra va chạm lại trên các mẫu quỹ đạo. Hệ số vận tốc/gia tốc lần lượt là
+0,18/0,15 cho đường OMPL và 0,15/0,10 cho đường Cartesian; quỹ đạo sau cùng
+đi qua action \texttt{/execute\_trajectory}.
+
+Trong Gazebo, đầu hút giữ vật bằng một khớp cố định và chỉ gắn khi đầu hút cách
+tâm vật không quá 35~mm. Cùng lúc đó, em đánh dấu vật là \emph{attached
+collision object} trong planning scene của MoveIt để bộ lập kế hoạch biết vật
+đang đi cùng robot. Lúc bắt đầu nhấc, vật vẫn tiếp xúc với bàn nên em tạm cho
+phép đúng cặp va chạm vật--bàn; sau khi nâng lên, kiểm tra cặp này được bật
+lại. Robot vẫn phải tránh bàn, các vật khác và tự va chạm trong suốt thao tác.
+
+Để biết một tác vụ thất bại ở đâu, em ghi riêng các mã lỗi như
+\texttt{INVALID\_OBJECT}, \texttt{INVALID\_ZONE}, \texttt{PLANNING\_FAILED},
+\texttt{GRASP\_FAILED} và \texttt{PRECONDITION\_FAILED}. Log của từng skill
+gồm \texttt{SUCCESS} hoặc \texttt{FAILED} kèm nguyên nhân; nếu một skill lỗi,
+executor không chạy tiếp các bước sau.
+
+\newpage
+\section{Luồng xử lý từ câu lệnh đến robot}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  stage/.style={draw=black,fill=white,align=center,text width=7.0cm,
+    minimum height=8mm,font=\small,inner sep=3pt},
+  reject/.style={draw=black,dashed,fill=white,align=center,text width=3.1cm,
+    minimum height=8mm,font=\small,inner sep=3pt},
+  flow/.style={-{Latex[length=2.2mm]},line width=0.55pt},
+  node distance=4.5mm]
+\node[stage] (user) {\textbf{1. Câu lệnh tự nhiên}\quad CLI nhận nguyên văn tiếng Việt/Anh};
+\node[stage,below=of user] (llm) {\textbf{2. 9Router / LLM}\quad Prompt + vị trí vật + ánh xạ MSSV};
+\node[stage,below=of llm] (json) {\textbf{3. Kế hoạch JSON}\quad Danh sách \texttt{pick}, \texttt{place}, \texttt{home}};
+\node[stage,below=of json] (valid) {\textbf{4. Validator}\quad Schema, allowlist, thứ tự và vùng trống};
+\node[stage,below=of valid] (exec) {\textbf{5. Skill Executor}\quad Chạy tuần tự, kiểm tra tiền điều kiện};
+\node[stage,below=of exec] (moveit) {\textbf{6. MoveIt~2}\quad IK, đường đi, va chạm, giới hạn khớp};
+\node[stage,below=of moveit] (robot) {\textbf{7. Controller + Gazebo/UR3e}\quad Thực thi quỹ đạo, đọc lại trạng thái};
+\node[reject,right=7mm of valid] (badplan) {Sai kế hoạch: từ chối\\không chuyển động};
+\node[reject,right=7mm of moveit] (badmotion) {Lỗi lập kế hoạch/skill:\\dừng và ghi log};
+\draw[flow] (user)--(llm);
+\draw[flow] (llm)--(json);
+\draw[flow] (json)--(valid);
+\draw[flow] (valid)--(exec);
+\draw[flow] (exec)--(moveit);
+\draw[flow] (moveit)--(robot);
+\draw[flow,dashed] (valid)--(badplan);
+\draw[flow,dashed] (moveit)--(badmotion);
+\end{tikzpicture}
+\caption{Luồng xử lý một yêu cầu và vị trí chương trình dừng khi kế hoạch hoặc chuyển động có lỗi.}
+\label{fig:flow}
+\end{figure}
+
+\textbf{Nhận yêu cầu.} Khi em nhập một câu lệnh bằng tùy chọn
+\texttt{--command}, node \texttt{skill\_executor} đọc vị trí ba vật từ
+\texttt{/gazebo/get\_entity\_state} và đối chiếu với các vùng trong
+\texttt{scene.yaml}. Từ đó, chương trình biết vùng nào đang trống trước khi
+lập kế hoạch. Một ảnh toàn cảnh cũng được chụp ở thời điểm này để so sánh với
+kết quả, nhưng ảnh không được dùng làm dữ liệu điều khiển.
+
+\textbf{Hiểu lệnh và lập kế hoạch.} \texttt{llm\_planner.py} chuyển nguyên văn
+câu lệnh, vị trí hiện tại và mô tả ba skill cho model qua 9Router. Nếu lệnh
+nhắc đến MSSV, planner gửi thêm ánh xạ đích đã tính từ hai chữ số cuối. LLM
+chỉ trả lời \emph{làm gì, với vật nào và đặt ở đâu}; nó không tạo tọa độ khớp
+hay vận tốc. Chẳng hạn, với câu lệnh của T1, phản hồi có dạng:
+\begin{lstlisting}
+{"plan": [
+  {"skill": "pick", "object": "red_cube"},
+  {"skill": "place", "object": "red_cube", "zone": "zone_b"},
+  {"skill": "home"}
+]}
+\end{lstlisting}
+
+\textbf{Duyệt kế hoạch.} JSON được kiểm tra cú pháp và khóa trùng trước khi
+validator xét nội dung. Kế hoạch chỉ được có tối đa 25 bước; mỗi skill phải
+có đúng các trường cần thiết, tên vật và vùng phải thuộc danh sách cho phép.
+Validator còn theo dõi trạng thái tay gắp: không thể \texttt{place} trước
+\texttt{pick}, cầm hai vật cùng lúc hoặc đặt vào vùng đã có vật. Bước cuối
+phải là \texttt{home} khi tay gắp đã rỗng. Nếu không đạt, chương trình báo
+\texttt{FAILED} ngay tại đây; T4 là một ví dụ robot không hề chuyển động.
+
+\textbf{Chạy từng thao tác.} Sau khi kế hoạch hợp lệ, executor thực hiện theo
+đúng thứ tự và kiểm tra lại tiền điều kiện trước mỗi skill. Với
+\texttt{pick}, robot tiếp cận vị trí vật vừa đọc từ Gazebo, hạ đầu hút, gắn
+vật rồi nâng lên. Với \texttt{place}, robot đi tới vùng đích, hạ vật, tháo
+khớp gắp và rút đầu hút. \texttt{home} chỉ chạy khi tay gắp rỗng.
+
+\textbf{Lập quỹ đạo và xác nhận kết quả.} Mỗi chuyển động của skill đi qua
+MoveIt~2 để giải động học nghịch, lập đường, kiểm tra va chạm và giới hạn
+khớp. Quỹ đạo được gửi tới \texttt{joint\_trajectory\_controller}; Gazebo
+cập nhật tư thế robot và vật. Sau mỗi skill, em đọc lại trạng thái từ Gazebo
+để kiểm tra thao tác thực sự đạt điều kiện đích rồi mới ghi \texttt{SUCCESS}.
+Nếu MoveIt hoặc skill báo lỗi, executor lưu nguyên nhân, trạng thái và ảnh
+tại thời điểm lỗi, đồng thời dừng phần kế hoạch còn lại.
+
+\newpage
+\section{Trích đoạn mã giải thích luồng xử lý}
+Các hình dưới đây được dựng từ \emph{mã nguồn thật} trong package, giữ nguyên
+nội dung và số dòng; dấu ba chấm chỉ những dòng không liên quan được lược bớt.
+Các dòng nền vàng là chỗ quyết định dữ liệu đi qua từng tầng, giúp đối chiếu
+sơ đồ Hình~\ref{fig:flow} với phần triển khai.
+
+\begin{figure}[htbp]\centering
+\Anh{results/code_llm_planner.png}
+\caption{\texttt{llm\_planner.py}: đọc MSSV, tạo ánh xạ trong ngữ cảnh LLM và phân tích phản hồi JSON.}
+\label{fig:code-planner}
+\end{figure}
+\noindent Hình~\ref{fig:code-planner} cho thấy câu lệnh không được đổi bằng
+những câu mẫu cố định: planner gửi ngữ cảnh \texttt{student\_assignment} và
+\texttt{locations} tới model, rồi chỉ nhận lại JSON để chuyển sang validator.
+
+\begin{figure}[htbp]\centering
+\Anh{results/code_task_validator.png}
+\caption{\texttt{task\_validator.py}: allowlist tham số của skill và kiểm tra vùng đích đã bị chiếm.}
+\label{fig:code-validator}
+\end{figure}
+\noindent Hình~\ref{fig:code-validator} minh họa ranh giới an toàn: mỗi skill
+chỉ nhận đúng bộ tham số cho phép; vùng bị chiếm bị từ chối trước khi robot
+nhận quỹ đạo.
+
+\begin{figure}[htbp]\centering
+\Anh{results/code_skill_executor.png}
+\caption{\texttt{skill\_executor.py}: gọi các robot skill tuần tự, ghi trạng thái và dừng khi có lỗi.}
+\label{fig:code-executor}
+\end{figure}
+\noindent Hình~\ref{fig:code-executor} cho thấy executor gọi \texttt{home},
+\texttt{pick} hoặc \texttt{place} theo từng bước đã duyệt; nó chụp ảnh và đọc
+lại tọa độ sau mỗi skill để tạo bằng chứng thực nghiệm.
+
+\clearpage
+\section{Kết quả chạy thử}
+Bộ kiểm thử xác nhận được chạy ngày 28/09/2026 sau khi hiệu chỉnh hệ thống.
+Các ca hợp lệ dùng LLM thật qua 9Router, không nạp sẵn JSON thử nghiệm. T1--T3
+thực thi tuần tự trên cùng cảnh; T6 và T7 mỗi ca khởi động từ cảnh ban đầu.
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{@{}p{0.6cm}Yp{3.55cm}r@{}}
+\toprule\textbf{Ca} & \textbf{Câu lệnh / tình huống} & \textbf{Kết quả quan sát} & \textbf{Giây}\\\midrule
+T1 & Đưa khối màu đỏ vào vùng B. & 3/3 skill thành công; đỏ ở B. & 37,6\\
+T2 & Hãy lấy khối màu vàng và đặt nó vào ô A. & 3/3 skill thành công; vàng ở A. & 41,5\\
+T3 & Move the blue cube to zone C. & 3/3 skill thành công; xanh ở C. & 36,7\\
+T4 & Đưa khối màu tím vào vùng D. & LLM trả kế hoạch rỗng; validator từ chối; không chuyển động. & 8,2\\
+T5 & Arrange all objects according to my student ID. (Trước khi khai báo MSSV.) & Từ chối kế hoạch rỗng; không tự tạo MSSV hoặc nhiệm vụ. & 5,8\\
+T6 & Đặt khối đỏ vào vùng A, khối vàng vào vùng B và khối xanh dương vào vùng C, rồi về home. & 7/7 skill thành công; ba vật đúng đích trong một tác vụ. & 87,4\\
+T7 & Arrange all objects according to my student ID. (MSSV 23020774.) & 7/7 skill thành công; A--vàng, B--đỏ, C--xanh. & 84,6\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+Thời gian là thời gian thực trên máy, gồm gọi LLM, thực thi và ghi bằng chứng;
+không phải thời gian riêng của thuật toán lập kế hoạch. Năm tác vụ hợp lệ hoàn
+thành 23/23 skill. Cả 59 chuyển động con trả mã MoveIt \texttt{SUCCESS}; 36 đoạn
+Cartesian đều đạt \texttt{fraction = 1.0}. Hai tác vụ không hợp lệ không gọi
+skill và không làm thay đổi tọa độ các vật. T6 kiểm tra một lệnh phối hợp ba
+vật với đích nêu trực tiếp; T7 mới là demo cá nhân hóa theo MSSV thật.
+
+\textbf{Đối chiếu vị trí đích.} Hệ tọa độ \texttt{world}, đơn vị mét. Tâm vật
+khi bắt đầu là $(0{,}26;-0{,}20;0{,}12)$, $(0{,}26;0;0{,}12)$ và
+$(0{,}26;0{,}20;0{,}12)$ tương ứng đỏ, vàng, xanh dương.
+\begin{center}\small
+\begin{tabular}{@{}lllr@{}}
+\toprule\textbf{Vật / đích} & \textbf{Tọa độ yêu cầu} & \textbf{Tọa độ đo sau tác vụ} & \textbf{Sai số (mm)}\\\midrule
+Đỏ / B & $(0{,}40;0;0{,}12)$ & $(0{,}39998;-0{,}00003;0{,}12000)$ & 0,031\\
+Vàng / A & $(0{,}40;-0{,}20;0{,}12)$ & $(0{,}39997;-0{,}20003;0{,}12000)$ & 0,040\\
+Xanh / C & $(0{,}40;0{,}20;0{,}12)$ & $(0{,}40001;0{,}19996;0{,}12000)$ & 0,037\\
+\bottomrule
+\end{tabular}
+\end{center}
+Sai số tính bằng khoảng cách Euclid giữa tâm vật đo được và tâm đích. Đây là
+kết quả của mô phỏng đầu hút lý tưởng, không thể suy ra độ chính xác robot thật.
+
+\textbf{Kiểm thử validator.} 19 bài kiểm thử tự động đều đạt, bao gồm chín cặp
+vật--vùng hợp lệ, schema/JSON sai, lệnh khớp chèn thêm, thứ tự thao tác sai,
+vùng bị chiếm và đủ sáu ánh xạ MSSV. Log: \texttt{validator\_tests.log}
+trong thư mục \texttt{results}.
+
+\textbf{Các lỗi đã xử lý trong quá trình triển khai.} Đã sửa việc nạp YAML động
+học để MoveIt nhận KDL, gắn đầu hút vào link có quán tính để Gazebo không loại
+bỏ khi chuyển URDF, và tránh xóa vật hai lần khi chuyển sang trạng thái attached.
+Đã giảm sai lệch cho phép khi tham số hóa quỹ đạo, chọn góc IK tương đương gần
+trạng thái hiện tại và xử lý tiếp xúc vật--bàn ở bước nâng. Các lần chạy lỗi
+trước hiệu chỉnh vẫn được lưu; bảng trên chỉ thống kê bộ xác nhận cuối, không
+khẳng định tỷ lệ thành công tuyệt đối trong mọi điều kiện.
+Một lần thử T7 dừng trước chuyển động do 9Router trả HTTP 502; sau khi khôi phục
+kết nối, T7 được chạy lại từ cảnh ban đầu và hoàn thành. Log lỗi cũng được giữ
+trong thư mục \texttt{results}.
+
+\newpage
+\section{Hình ảnh thực nghiệm}
+\begin{center}
+\begin{minipage}[t]{0.485\linewidth}\centering
+\Anh{results/validation_T1.before_color_crop.png}
+\small\textbf{(a)} Trước T1: ba khối ở vị trí ban đầu.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\linewidth}\centering
+\Anh{results/validation_T1.step1_color_crop.png}
+\small\textbf{(b)} T1: khối đỏ đã được gắp và nâng.
+\end{minipage}
+\end{center}
+\begin{center}
+\begin{minipage}[t]{0.485\linewidth}\centering
+\Anh{results/validation_T6.after_color_crop.png}
+\small\textbf{(c)} T6: A--đỏ, B--vàng, C--xanh.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\linewidth}\centering
+\Anh{results/validation_student_P2.after_color_crop.png}
+\small\textbf{(d)} T7 theo MSSV: A--vàng, B--đỏ, C--xanh; robot về home.
+\end{minipage}
+\end{center}
+\smallskip
+Ảnh màu lấy trực tiếp từ camera Gazebo ở các mốc được ghi trong JSON và chỉ
+cắt vùng bàn để nhìn rõ robot, vật và vùng đích; ảnh toàn cảnh gốc vẫn nằm
+trong \texttt{results/}. Ba vùng trên bàn từ phía gần đến phía xa lần lượt là
+A, B, C. T6 và T7 dùng hai ánh xạ khác nhau; (d) là kết quả của \emph{một} câu lệnh
+theo MSSV. Các file JSON lưu câu lệnh, phản hồi LLM, kết quả từng skill,
+trạng thái MoveIt và tọa độ trước/sau.
+
+\newpage
+\section{Nhiệm vụ cá nhân theo MSSV}
+Họ tên và MSSV trên bìa được lấy từ mẫu sinh viên cung cấp. Cùng MSSV
+\MSSV{} đã được ghi vào cấu hình sinh viên. Hai chữ số cuối là $XX=74$, do đó
+\[
+P=XX\bmod 6=74\bmod 6=2.
+\]
+Theo quy ước của đề, trường hợp $P=2$ yêu cầu \textbf{Zone A nhận khối vàng,
+Zone B nhận khối đỏ và Zone C nhận khối xanh dương}. Bảng dưới đây ghi đủ sáu
+khả năng và đánh dấu hàng được chọn cho MSSV này.
+\begin{center}\small
+\begin{tabular}{@{}clll@{}}
+\toprule $P$ & \textbf{Zone A} & \textbf{Zone B} & \textbf{Zone C}\\\midrule
+0 & Đỏ & Vàng & Xanh dương\\
+1 & Đỏ & Xanh dương & Vàng\\
+\textbf{2 (đã chọn)} & \textbf{Vàng} & \textbf{Đỏ} & \textbf{Xanh dương}\\
+3 & Vàng & Xanh dương & Đỏ\\
+4 & Xanh dương & Đỏ & Vàng\\
+5 & Xanh dương & Vàng & Đỏ\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[htbp]\centering
+\Anh{results/code_student_assignment.png}
+\caption{Hàm \texttt{assignment()} lấy đúng hai chữ số cuối MSSV, tính modulo 6 và tra ánh xạ đích.}
+\label{fig:code-assignment}
+\end{figure}
+Hình~\ref{fig:code-assignment} cho thấy ánh xạ $P=2$ được tính từ cấu hình,
+không nhập cứng kế hoạch bảy bước vào chương trình.
+
+\textbf{Cách chạy.} Từ cảnh ban đầu, tôi nhập đúng câu lệnh
+\texttt{Arrange all objects according to my student ID.} Planner nhận ánh xạ
+$P=2$ trong ngữ cảnh và trả về kế hoạch bảy bước sau; validator xác nhận ba
+vùng đích còn trống trước khi executor bắt đầu:
+\begin{lstlisting}
+pick(yellow_cube) -> place(yellow_cube, zone_a)
+pick(red_cube)    -> place(red_cube, zone_b)
+pick(blue_cube)   -> place(blue_cube, zone_c)
+home()
+\end{lstlisting}
+Đây là kết quả LLM của ca T7, lưu trong
+\texttt{validation\_student\_P2.json}; không phải kế hoạch nạp qua tùy chọn
+\texttt{--test-plan}. Robot thực hiện đủ 7/7 skill trong
+84,6~s; 19/19 chuyển động MoveIt trả mã \texttt{SUCCESS}, 12/12 đoạn Cartesian
+có \texttt{fraction=1.0}, tay gắp rỗng và robot trở về home. Tọa độ tâm vật
+sau tác vụ được đọc lại từ Gazebo (hệ \texttt{world}, đơn vị mét):
+\begin{center}\small
+\begin{tabular}{@{}lllr@{}}
+\toprule\textbf{Vật / đích} & \textbf{Tâm đích} & \textbf{Tâm đo được} & \textbf{Sai số (mm)}\\\midrule
+Vàng / A & $(0{,}40;-0{,}20;0{,}12)$ & $(0{,}399973;-0{,}200029;0{,}120000)$ & 0,040\\
+Đỏ / B & $(0{,}40;0;0{,}12)$ & $(0{,}399982;-0{,}000025;0{,}120000)$ & 0,031\\
+Xanh / C & $(0{,}40;0{,}20;0{,}12)$ & $(0{,}400006;0{,}199964;0{,}120000)$ & 0,037\\
+\bottomrule
+\end{tabular}
+\end{center}
+Các sai số trên là khoảng cách Euclid tính từ tâm đích, làm tròn đến
+0,001~mm. Chúng chỉ phản ánh mô phỏng đầu hút lý tưởng. Vì ba vùng ban đầu
+đều trống, ca này không cần vùng đệm để hoán đổi vật.
+
+\section{Kết luận và liên kết bài nộp}
+Hệ thống đã thực hiện thành công điều khiển một vật bằng câu lệnh tiếng Việt
+và tiếng Anh, có kiểm tra kế hoạch trước khi chạy và xác nhận đích bằng trạng
+thái Gazebo. Câu lệnh theo MSSV 23020774 cũng hoàn thành đủ bảy skill với
+ánh xạ $P=2$; log và ảnh (d) là bằng chứng của chính lần chạy này.
+Giới hạn hiện tại: đầu hút lý tưởng, chưa đánh giá trên robot thật,
+chưa có vùng đệm để hoán đổi khi đích bị vật khác chiếm.
+
+\textbf{Video demo:} tệp \path{results/ur3e_mssv_23020774_demo.mp4}
+(104~s, quay trực tiếp từ camera Gazebo). Lần chạy đi kèm video lưu tại
+\path{results/demo_T7_video.json}, đạt 7/7 skill, 19/19 chuyển động MoveIt
+và bố trí đích $P=2$ đúng yêu cầu.\par
+\textbf{Link Google Drive công khai:} \textit{[Bổ sung sau khi tải video lên.]}
+\quad\textbf{GitHub:} \textit{[Bổ sung link repository Public.]}
+Mã nguồn được tổ chức độc lập với bài trước; README có hướng dẫn build và chạy.
+
+{\footnotesize\textbf{Tài liệu tham khảo:}
+\href{https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver}{UR ROS~2 Driver};
+\href{https://github.com/ros-simulation/gazebo_ros_pkgs}{Gazebo ROS};
+\href{https://github.com/decolua/9router}{9Router};
+\href{https://opencode.ai/docs/en/zen/}{OpenCode Zen}.}
+\end{document}

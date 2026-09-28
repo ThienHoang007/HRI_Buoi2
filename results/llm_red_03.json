@@ -1,0 +1,94 @@
+{
+  "mode": "llm",
+  "command": "Đưa khối màu đỏ vào vùng B.",
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "FAILED",
+      "error": "EXECUTION_FAILED",
+      "seconds": 8.221
+    }
+  ],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.2599988872555304,
+      -0.19999956392742826,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 636,
+      "completion_tokens": 603,
+      "total_tokens": 1239,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 576,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 570
+      }
+    },
+    "raw_plan": "{\"plan\":[{\"skill\":\"pick\",\"object\":\"red_cube\"},{\"skill\":\"place\",\"object\":\"red_cube\",\"zone\":\"zone_b\"},{\"skill\":\"home\"}]}"
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "error": "EXECUTION_FAILED",
+  "final_positions": {
+    "red_cube": [
+      0.2599988872555304,
+      -0.19999956392742826,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 99999,
+      "seconds": 8.036,
+      "trajectory_points": 0
+    }
+  ],
+  "seconds": 24.472,
+  "held_at_end": null,
+  "image_saved": true
+}

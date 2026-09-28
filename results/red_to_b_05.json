@@ -1,0 +1,84 @@
+{
+  "mode": "skill_integration_test",
+  "command": null,
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "FAILED",
+      "error": "GRASP_FAILED: MISSING_MODEL_OR_CUP",
+      "seconds": 30.553
+    }
+  ],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.25999999999998075,
+      -0.20000000000017717,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.7907775717114778e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982274,
+      0.1199999999997791
+    ]
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "error": "GRASP_FAILED: MISSING_MODEL_OR_CUP",
+  "final_positions": {
+    "red_cube": [
+      0.25999999999998075,
+      -0.20000000000017926,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 7.75,
+      "trajectory_points": 72,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:descend",
+      "moveit_error_code": 1,
+      "seconds": 22.577,
+      "trajectory_points": 125,
+      "state_valid_after": true
+    }
+  ],
+  "seconds": 31.973,
+  "held_at_end": null,
+  "image_saved": true
+}

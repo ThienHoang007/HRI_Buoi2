@@ -1,0 +1,6 @@
+Built-in Codex LaTeX compiler, 2026-09-28
+Status: compile-failed (environment initialization)
+Diagnostic: Unable to find standard directories for platform
+
+The .tex source and real Gazebo images are preserved in bao_cao_latex.zip.
+PDF compilation and page layout have not been verified by this compiler.

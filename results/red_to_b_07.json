@@ -1,0 +1,188 @@
+{
+  "mode": "skill_integration_test",
+  "command": null,
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.2599929003216862,
+          -0.20000384153093334,
+          0.2199901059668227
+        ],
+        "yellow_cube": [
+          0.25999999999998075,
+          -1.8454090720103865e-13,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 16.449
+    },
+    {
+      "skill": "place",
+      "object": "red_cube",
+      "zone": "zone_b",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.39997639066701435,
+          2.4683997048216698e-05,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.25999999999998075,
+          -1.8454090720103865e-13,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 10.365
+    },
+    {
+      "skill": "home",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.39997639066701435,
+          2.4683997048216698e-05,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.25999999999998075,
+          -1.8454090720103865e-13,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 9.985
+    }
+  ],
+  "success": true,
+  "initial_positions": {
+    "red_cube": [
+      0.25999418722042344,
+      -0.19999870678463136,
+      0.11999162511540383
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "final_positions": {
+    "red_cube": [
+      0.39997639066701435,
+      2.4683997048216698e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 8.226,
+      "trajectory_points": 296,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.367,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:lift",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.512,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:approach",
+      "moveit_error_code": 1,
+      "seconds": 2.65,
+      "trajectory_points": 90,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.14,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:retreat",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 2.742,
+      "state_valid_after": true
+    },
+    {
+      "motion": "home",
+      "moveit_error_code": 1,
+      "seconds": 9.046,
+      "trajectory_points": 346,
+      "state_valid_after": true
+    }
+  ],
+  "seconds": 38.832,
+  "held_at_end": null,
+  "image_saved": true
+}

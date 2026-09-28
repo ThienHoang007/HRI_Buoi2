@@ -1,0 +1,66 @@
+{
+  "mode": "llm",
+  "command": "Đưa khối màu tím vào vùng D.",
+  "steps": [],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.39997281259400025,
+      -0.20002907728727473,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.40000618477527683,
+      0.1999637002099648,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 780,
+      "completion_tokens": 175,
+      "total_tokens": 955,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 169
+      }
+    },
+    "raw_plan": "{\"plan\":[]}"
+  },
+  "plan": {
+    "plan": []
+  },
+  "error": "INVALID_PLAN_LENGTH",
+  "final_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.39997281259400025,
+      -0.20002907728727473,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.40000618477527683,
+      0.1999637002099648,
+      0.1199999999997791
+    ]
+  },
+  "motions": [],
+  "seconds": 8.191,
+  "held_at_end": null,
+  "image_saved": true
+}

@@ -1,0 +1,66 @@
+{
+  "mode": "llm",
+  "command": "Hãy lấy khối màu vàng và đặt nó vào ô A.",
+  "steps": [],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 643,
+      "completion_tokens": 241,
+      "total_tokens": 884,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 576,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 235
+      }
+    },
+    "raw_plan": "{\"plan\":[]}"
+  },
+  "plan": {
+    "plan": []
+  },
+  "error": "INVALID_PLAN_LENGTH",
+  "final_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [],
+  "seconds": 8.243,
+  "held_at_end": null,
+  "image_saved": true
+}

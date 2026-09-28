@@ -1,0 +1,206 @@
+{
+  "mode": "llm",
+  "command": "Hãy lấy khối màu vàng và đặt nó vào ô A.",
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "yellow_cube",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.39998169663008737,
+          -2.5331765822804764e-05,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.26000111105920654,
+          4.697871298030152e-06,
+          0.2199878936855107
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 11.232
+    },
+    {
+      "skill": "place",
+      "object": "yellow_cube",
+      "zone": "zone_a",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.39998169663008737,
+          -2.5331765822804764e-05,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.39997281259400025,
+          -0.20002907728727473,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 13.934
+    },
+    {
+      "skill": "home",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.39998169663008737,
+          -2.5331765822804764e-05,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.39997281259400025,
+          -0.20002907728727473,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 9.386
+    }
+  ],
+  "success": true,
+  "initial_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 780,
+      "completion_tokens": 136,
+      "total_tokens": 916,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 103
+      }
+    },
+    "raw_plan": "{\"plan\":[{\"skill\":\"pick\",\"object\":\"yellow_cube\"},{\"skill\":\"place\",\"object\":\"yellow_cube\",\"zone\":\"zone_a\"},{\"skill\":\"home\"}]}"
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "yellow_cube"
+      },
+      {
+        "skill": "place",
+        "object": "yellow_cube",
+        "zone": "zone_a"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "final_positions": {
+    "red_cube": [
+      0.39998169663008737,
+      -2.5331765822804764e-05,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.39997281259400025,
+      -0.20002907728727473,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "yellow_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 4.497,
+      "trajectory_points": 199,
+      "state_valid_after": true
+    },
+    {
+      "motion": "yellow_cube:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 22,
+      "moveit_error_code": 1,
+      "seconds": 2.676,
+      "state_valid_after": true
+    },
+    {
+      "motion": "yellow_cube:lift",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 22,
+      "moveit_error_code": 1,
+      "seconds": 2.706,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:approach",
+      "moveit_error_code": 1,
+      "seconds": 3.829,
+      "trajectory_points": 134,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 23,
+      "moveit_error_code": 1,
+      "seconds": 2.848,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:retreat",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 23,
+      "moveit_error_code": 1,
+      "seconds": 5.004,
+      "state_valid_after": true
+    },
+    {
+      "motion": "home",
+      "moveit_error_code": 1,
+      "seconds": 8.133,
+      "trajectory_points": 180,
+      "state_valid_after": true
+    }
+  ],
+  "seconds": 41.531,
+  "held_at_end": null,
+  "image_saved": true
+}

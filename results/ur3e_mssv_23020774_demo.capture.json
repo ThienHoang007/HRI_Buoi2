@@ -1,0 +1,12 @@
+{
+  "source_topic": "/overview/overview/image_raw",
+  "student_id": "23020774",
+  "P": 2,
+  "fps": 6,
+  "frames": 624,
+  "video_seconds": 104.0,
+  "completed_skills_seen": 7,
+  "task_success_seen": true,
+  "video": "results/ur3e_mssv_23020774_demo.mp4",
+  "ffmpeg_exit_code": 0
+}

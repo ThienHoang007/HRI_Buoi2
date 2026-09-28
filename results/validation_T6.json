@@ -1,0 +1,418 @@
+{
+  "mode": "llm",
+  "command": "Đặt khối đỏ vào vùng A, khối vàng vào vùng B và khối xanh dương vào vùng C, rồi về home.",
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.2600047468980062,
+          -0.1999974246696202,
+          0.21999848790443438
+        ],
+        "yellow_cube": [
+          0.25999999999998075,
+          -1.8454090720103865e-13,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 13.067
+    },
+    {
+      "skill": "place",
+      "object": "red_cube",
+      "zone": "zone_a",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.25999999999998075,
+          -1.8454090720103865e-13,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 10.512
+    },
+    {
+      "skill": "pick",
+      "object": "yellow_cube",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.26000104524199896,
+          3.1566326192192886e-06,
+          0.21999815299230496
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 9.742
+    },
+    {
+      "skill": "place",
+      "object": "yellow_cube",
+      "zone": "zone_b",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.399977697812221,
+          -2.668602345945394e-05,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.25999999999998075,
+          0.19999999999982077,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 11.109
+    },
+    {
+      "skill": "pick",
+      "object": "blue_cube",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.399977697812221,
+          -2.668602345945394e-05,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.2599978649728963,
+          0.20000494434599758,
+          0.2199881052839369
+        ]
+      },
+      "seconds": 9.268
+    },
+    {
+      "skill": "place",
+      "object": "blue_cube",
+      "zone": "zone_c",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.399977697812221,
+          -2.668602345945394e-05,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.4000061844011906,
+          0.19996370021410745,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 13.793
+    },
+    {
+      "skill": "home",
+      "status": "SUCCESS",
+      "positions_after": {
+        "red_cube": [
+          0.3999768089352183,
+          -0.2000277232925718,
+          0.1199999999997791
+        ],
+        "yellow_cube": [
+          0.399977697812221,
+          -2.668602345945394e-05,
+          0.1199999999997791
+        ],
+        "blue_cube": [
+          0.4000061844011906,
+          0.19996370021410745,
+          0.1199999999997791
+        ]
+      },
+      "seconds": 4.681
+    }
+  ],
+  "success": true,
+  "initial_positions": {
+    "red_cube": [
+      0.25999999999998075,
+      -0.20000000000017926,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 790,
+      "completion_tokens": 587,
+      "total_tokens": 1377,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 512,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 508
+      }
+    },
+    "raw_plan": "{\"plan\":[{\"skill\":\"pick\",\"object\":\"red_cube\"},{\"skill\":\"place\",\"object\":\"red_cube\",\"zone\":\"zone_a\"},{\"skill\":\"pick\",\"object\":\"yellow_cube\"},{\"skill\":\"place\",\"object\":\"yellow_cube\",\"zone\":\"zone_b\"},{\"skill\":\"pick\",\"object\":\"blue_cube\"},{\"skill\":\"place\",\"object\":\"blue_cube\",\"zone\":\"zone_c\"},{\"skill\":\"home\"}]}"
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_a"
+      },
+      {
+        "skill": "pick",
+        "object": "yellow_cube"
+      },
+      {
+        "skill": "place",
+        "object": "yellow_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "pick",
+        "object": "blue_cube"
+      },
+      {
+        "skill": "place",
+        "object": "blue_cube",
+        "zone": "zone_c"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "final_positions": {
+    "red_cube": [
+      0.3999768089352183,
+      -0.2000277232925718,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.399977697812221,
+      -2.668602345945394e-05,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.4000061844011906,
+      0.19996370021410745,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 5.15,
+      "trajectory_points": 198,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.186,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:lift",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.392,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:approach",
+      "moveit_error_code": 1,
+      "seconds": 3.01,
+      "trajectory_points": 111,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 23,
+      "moveit_error_code": 1,
+      "seconds": 2.923,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_a:retreat",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 23,
+      "moveit_error_code": 1,
+      "seconds": 2.787,
+      "state_valid_after": true
+    },
+    {
+      "motion": "yellow_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 3.07,
+      "trajectory_points": 134,
+      "state_valid_after": true
+    },
+    {
+      "motion": "yellow_cube:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 22,
+      "moveit_error_code": 1,
+      "seconds": 2.715,
+      "state_valid_after": true
+    },
+    {
+      "motion": "yellow_cube:lift",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 22,
+      "moveit_error_code": 1,
+      "seconds": 2.741,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:approach",
+      "moveit_error_code": 1,
+      "seconds": 2.558,
+      "trajectory_points": 98,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.425,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_b:retreat",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.279,
+      "state_valid_after": true
+    },
+    {
+      "motion": "blue_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 2.248,
+      "trajectory_points": 90,
+      "state_valid_after": true
+    },
+    {
+      "motion": "blue_cube:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 2.65,
+      "state_valid_after": true
+    },
+    {
+      "motion": "blue_cube:lift",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 21,
+      "moveit_error_code": 1,
+      "seconds": 3.054,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_c:approach",
+      "moveit_error_code": 1,
+      "seconds": 4.051,
+      "trajectory_points": 111,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_c:descend",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 22,
+      "moveit_error_code": 1,
+      "seconds": 3.999,
+      "state_valid_after": true
+    },
+    {
+      "motion": "zone_c:retreat",
+      "planner": "MoveIt Cartesian",
+      "fraction": 1.0,
+      "trajectory_points": 23,
+      "moveit_error_code": 1,
+      "seconds": 3.798,
+      "state_valid_after": true
+    },
+    {
+      "motion": "home",
+      "moveit_error_code": 1,
+      "seconds": 3.77,
+      "trajectory_points": 146,
+      "state_valid_after": true
+    }
+  ],
+  "seconds": 87.426,
+  "held_at_end": null,
+  "image_saved": true
+}

@@ -1,0 +1,102 @@
+{
+  "mode": "llm",
+  "command": "Đưa khối màu đỏ vào vùng B.",
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "FAILED",
+      "error": "PLANNING_SCENE_FAILED",
+      "seconds": 11.208
+    }
+  ],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.25999999999998075,
+      -0.20000000000017926,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "llm": {
+    "model": "oc/mimo-v2.5-free",
+    "usage": {
+      "prompt_tokens": 636,
+      "completion_tokens": 378,
+      "total_tokens": 1014,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 576,
+        "cache_write_tokens": 0
+      },
+      "completion_tokens_details": {
+        "audio_tokens": 0,
+        "reasoning_tokens": 333
+      }
+    },
+    "raw_plan": "{\"plan\": [{\"skill\": \"pick\", \"object\": \"red_cube\"}, {\"skill\": \"place\", \"object\": \"red_cube\", \"zone\": \"zone_b\"}, {\"skill\": \"home\"}]}"
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "error": "PLANNING_SCENE_FAILED",
+  "final_positions": {
+    "red_cube": [
+      0.2599961956532886,
+      -0.20000548671845622,
+      0.12000315434727678
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 8.784,
+      "trajectory_points": 353,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:descend",
+      "moveit_error_code": 1,
+      "seconds": 2.082,
+      "trajectory_points": 81,
+      "state_valid_after": true
+    }
+  ],
+  "seconds": 23.334,
+  "held_at_end": "red_cube",
+  "image_saved": true
+}

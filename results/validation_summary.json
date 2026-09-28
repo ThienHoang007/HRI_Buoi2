@@ -1,0 +1,23 @@
+{
+  "student_name": "Nguyễn Hoàng Thiện",
+  "student_id": "23020774",
+  "last_two_digits": 74,
+  "P": 2,
+  "student_assignment": {
+    "zone_a": "yellow_cube",
+    "zone_b": "red_cube",
+    "zone_c": "blue_cube"
+  },
+  "student_case": {
+    "success": true,
+    "seconds": 84.572,
+    "skills": 7,
+    "motions": 19,
+    "cartesian_motions": 12,
+    "error_mm": {
+      "yellow_cube": 0.04,
+      "red_cube": 0.031,
+      "blue_cube": 0.037
+    }
+  }
+}

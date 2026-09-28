@@ -1,0 +1,90 @@
+{
+  "mode": "skill_integration_test",
+  "command": null,
+  "steps": [
+    {
+      "skill": "pick",
+      "object": "red_cube",
+      "status": "FAILED",
+      "error": "PLANNING_FAILED",
+      "seconds": 9.859
+    }
+  ],
+  "success": false,
+  "initial_positions": {
+    "red_cube": [
+      0.2599988872555304,
+      -0.19999956392742826,
+      0.1199999999997791
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "plan": {
+    "plan": [
+      {
+        "skill": "pick",
+        "object": "red_cube"
+      },
+      {
+        "skill": "place",
+        "object": "red_cube",
+        "zone": "zone_b"
+      },
+      {
+        "skill": "home"
+      }
+    ]
+  },
+  "error": "PLANNING_FAILED",
+  "final_positions": {
+    "red_cube": [
+      0.2599983858068356,
+      -0.1999991364728547,
+      0.11999010774727589
+    ],
+    "yellow_cube": [
+      0.25999999999998075,
+      -1.8454090720103865e-13,
+      0.1199999999997791
+    ],
+    "blue_cube": [
+      0.25999999999998075,
+      0.19999999999982077,
+      0.1199999999997791
+    ]
+  },
+  "motions": [
+    {
+      "motion": "red_cube:approach",
+      "moveit_error_code": 1,
+      "seconds": 7.454,
+      "trajectory_points": 295,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:descend",
+      "moveit_error_code": 1,
+      "seconds": 1.934,
+      "trajectory_points": 81,
+      "state_valid_after": true
+    },
+    {
+      "motion": "red_cube:lift",
+      "moveit_error_code": -2,
+      "seconds": 0.089,
+      "trajectory_points": 124
+    }
+  ],
+  "seconds": 10.925,
+  "held_at_end": "red_cube",
+  "image_saved": true
+}

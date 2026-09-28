@@ -1,0 +1,13 @@
+build/
+install/
+log/
+.runtime/
+__pycache__/
+*.pyc
+.env
+*.aux
+*.log
+!results/validator_tests.log
+!results/validation_T*.log
+*.out
+*.synctex.gz
