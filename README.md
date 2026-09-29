@@ -118,56 +118,6 @@ bash scripts/run.sh --test-plan tests/red_to_b.json --result results/skill_test.
 
 `--test-plan` là kiểm thử tích hợp skill trực tiếp, **không phải** lần chạy LLM.
 File JSON kết quả lưu `mode` để phân biệt. Chạy lại scene bằng cách dừng terminal
-mô phỏng với Ctrl+C rồi khởi động lại, nếu cần đưa các vật về vị trí ban đầu.
-Khi một skill thất bại, executor dừng chuỗi; kiểm tra `held_at_end` trước khi
+mô phỏng với Ctrl+C rồi khởi động lại, nếu cần đưa các vật về vị trí ban đầhi
 khởi động một tác vụ mới. Nếu còn giữ vật, dừng và khởi động lại mô phỏng trước.
 
-## MSSV và phạm vi
-
-Tên Nguyễn Hoàng Thiện và MSSV 23020774 đã được điền trong
-`config/student_config.yaml`. Hai số cuối 74 cho `P = 74 mod 6 = 2`, tức Zone A
-nhận khối vàng, Zone B nhận khối đỏ, Zone C nhận khối xanh dương. Sau khi build,
-chạy từ cảnh ban đầu:
-
-```bash
-bash scripts/run.sh --command 'Arrange all objects according to my student ID.' --result results/student.json
-```
-
-Ca T7 trong `results/validation_student_P2.json` là lần chạy LLM thật: 7/7 skill,
-19/19 chuyển động MoveIt thành công, ba vật đúng đích. T5 là phép thử lịch sử
-trước khi cấu hình MSSV; khi đó planner từ chối đúng yêu cầu cá nhân hóa.
-Các vật ban đầu nằm ngoài vùng đích. Chưa triển khai vùng đệm để hoán đổi khi
-một đích bị vật khác chiếm; validator sẽ từ chối trường hợp này.
-
-Video demo màu đã ghi trực tiếp từ topic camera của Gazebo khi chạy câu lệnh
-theo MSSV: `results/ur3e_mssv_23020774_demo.mp4` (104 giây). Log của cùng lần
-quay là `results/demo_T7_video.json`: 7/7 skill và 19/19 chuyển động thành công.
-Video bàn giao chỉ giữ cảnh camera để không hiển thị sai mốc thời gian của
-bảng trạng thái ở một bản dựng trước. Nếu muốn tự quay lại, sau khi bật 9Router
-và chạy `bash scripts/launch.sh gui:=false`, mở hai terminal Ubuntu trong thư
-mục project:
-
-```bash
-# Terminal ghi video (để chạy trong lúc robot thao tác)
-source /opt/ros/humble/setup.bash
-export ROS_DOMAIN_ID=42
-python3 scripts/record_demo.py --output results/my_demo.mp4 --log results/my_demo.log --stop-file results/my_demo.stop
-```
-
-```bash
-# Terminal điều khiển
-bash scripts/run.sh --command 'Arrange all objects according to my student ID.' --result results/my_demo.json > results/my_demo.log 2>&1
-touch results/my_demo.stop
-```
-
-Recorder đọc log mới và đóng MP4 khi thấy tệp `.stop`. Cần chạy từ cảnh ban
-đầu, vì các vùng đích đã có vật sẽ bị validator từ chối. Ảnh màu và hình trích
-đoạn mã được tạo bằng `scripts/make_report_figures.py` từ ảnh camera gốc và mã
-nguồn thật. URL Google Drive công khai và GitHub Public sẽ được bổ sung sau.
-
-## Tài liệu gốc
-
-- [UR ROS 2 Driver và cấu hình MoveIt](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver)
-- [Gazebo ROS packages](https://github.com/ros-simulation/gazebo_ros_pkgs)
-- [9Router](https://github.com/decolua/9router)
-- [OpenCode Zen — model và API](https://opencode.ai/docs/en/zen/)
